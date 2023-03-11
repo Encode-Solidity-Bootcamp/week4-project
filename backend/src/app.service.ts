@@ -52,7 +52,7 @@ export class AppService {
     // create signer
     // connect the signer
     // call the mint function
-    // return tx hash
+    return "tx hash"
     throw new Error('Method not implemented.');
   }
 }

@@ -4,6 +4,7 @@ import { BigNumber, Contract, ethers, utils, Wallet } from 'ethers';
 import tokenJson from '../assets/MyToken.json';
 
 const API_URL = "http://localhost:3000/contract-address";
+const API_URL_MINT = "http://localhost:3000/request-tokens";
 
 @Component({
   selector: 'app-root',
@@ -65,8 +66,12 @@ createWallet(){
   });
   }
 
-  requestTokens(){
-    console.log("dd")
+  requestTokens(amount: string){
+    const body = {address: this.userWallet?.address, amount: amount}
+    return this.http.post<{result: string}>(API_URL_MINT, body).subscribe((result) => {
+      console.log('Requested: ' + amount + ' tokens for address' + this.userWallet?.address);
+      console.log('Transaction hash: ' + result.result)
+    });
   }
 }
 

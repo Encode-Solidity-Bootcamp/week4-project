@@ -18,13 +18,16 @@
           <h6 class="card-subtitle mb-2 text-muted">{{userWallet.address }}</h6>
           <p class="card-text">Eth Balance: {{ userEthBalance }} Eth </p>
           <p class="card-text">Eth Balance: {{ userTokenBalance }} MTK </p>
-          <button 
+          <button
+          *ngIf="mintAmount.value" 
         type="button" 
-        class="btn btn-danger btn-lg px-4 gap-3 my-5" 
-        (click)="requestTokens()"
+        class="btn btn-danger btn-lg px-4 gap-3 my-4" 
+        (click)="requestTokens(mintAmount.value)"
         >
         Request Tokens
       </button>
+      <p>Amount: </p>
+          <input #mintAmount type="number" min="0" max="10" class="input">
         </div>
       </div>
       <div class="card mt-4 mx-auto my-4" *ngIf="tokenContractAddress">
