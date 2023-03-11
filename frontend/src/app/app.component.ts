@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Contract, ethers, utils, Wallet } from 'ethers';
+import { BigNumber, Contract, ethers, utils, Wallet } from 'ethers';
+import tokenJson from '../assets/MyToken.json';
 
 const API_URL = "http://localhost:3000/contract-address";
 
@@ -17,6 +18,7 @@ export class AppComponent {
   userTokenBalance: number | undefined;
   tokenContractAddress: string | undefined;
   tokenContract: Contract | undefined;
+  tokenTotalSupply: number | string | undefined;
   
 
   constructor(private http: HttpClient){
@@ -39,7 +41,17 @@ export class AppComponent {
   this.tokenContractAddress;
 }
 updateTokenInfo(){
-  this.tokenContract = new Contract(this.tokenContract, abi, this.userWallet ?? this.provider)
+  if(!this.tokenContractAddress) return;
+  this.tokenContract = new Contract(
+    this.tokenContractAddress, 
+    tokenJson.abi, 
+    this.userWallet ?? this.provider
+    );
+    this.tokenTotalSupply = 'loading...'
+  this.tokenContract['totalSupply']().then((totalSupplyBN: BigNumber) => {
+    const totalSupplyStr = utils.formatEther(totalSupplyBN);
+    this.tokenTotalSupply = parseFloat(totalSupplyStr);
+})
 }
 clearBlock(){
   this.blockNumber = 0;
