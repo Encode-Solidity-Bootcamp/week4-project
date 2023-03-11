@@ -9,7 +9,7 @@ import {ethers} from 'ethers';
 export class AppComponent {
   blockNumber: number | string | undefined ; 
   provider: ethers.providers.BaseProvider;
-  transactions: string[] | undefined;
+  
 
   constructor(){
     this.provider = ethers.getDefaultProvider('goerli');
@@ -19,7 +19,6 @@ export class AppComponent {
     this.blockNumber = "loading..."
     this.provider.getBlock('latest').then((block) => {
       this.blockNumber = block.number;
-      this.transactions = block.transactions;
   });
 }
 clearBlock(){
