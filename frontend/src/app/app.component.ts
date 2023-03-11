@@ -64,5 +64,9 @@ createWallet(){
     this.userEthBalance = parseFloat(balanceStr);
   });
   }
+
+  requestTokens(){
+    console.log("dd")
+  }
 }
 

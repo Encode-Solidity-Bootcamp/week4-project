@@ -45,4 +45,14 @@ export class AppService {
     const txReceipt = await tx.wait();
     return txReceipt.status == 1 ? 'Completed' : 'Reverted';
   }
+
+  requestTokens(address: string, amount: number){
+
+    //load pkey from .env
+    // create signer
+    // connect the signer
+    // call the mint function
+    // return tx hash
+    throw new Error('Method not implemented.');
+  }
 }

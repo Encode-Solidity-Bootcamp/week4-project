@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { AppService } from './app.service';
+import { RequestTokensDTO } from './dtos/createPaymentOrder.dto';
 
 @Controller()
 export class AppController {
@@ -28,5 +29,9 @@ export class AppController {
     hash: string,
   ): Promise<string> {
     return await this.appService.getTransactionStatus(hash);
+  }
+  @Post('request-tokens')
+  requestTokens(@Body() body: RequestTokensDTO){
+    return this.appService.requestTokens(body.address, body.amount)
   }
 }
