@@ -1,10 +1,28 @@
 <div class="px-4 py-5 my-5 text-center">
   <h1 class="display-5 fw-bold">Hello</h1>
   <div class="col-lg-6 mx-auto">
-    <p *ngIf="blockNumber && blockNumber > 0"class="lead mb-4">
-      We are connected to the Goerli Blockchain at Block <strong>{{ blockNumber }}</strong>
-    </p>    
+    <div class="mx-4" *ngIf="blockNumber && blockNumber > 0">
+      <p class="lead mb-4">
+        We are connected to the Goerli Blockchain at block 
+        <strong>{{ blockNumber }}</strong></p>
+      <button 
+        type="button" 
+        class="btn btn-success btn-lg px-4 gap-3 my-5" 
+        (click)="createWallet()"
+        >
+        {{userWallet ? "Create Another" : "Create"}} Wallet
+      </button>
+      <div class="card mt-4 mx-auto my-4" *ngIf="userWallet">
+        <div class="card-body">
+          <h5 class="card-title">User Wallet</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{userWallet.address }}</h6>
+          <p class="card-text">Eth Balance: {{ userEthBalance }} Eth </p>
+        </div>
+      </div>
+    </div>
+    
     <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+      
       <button 
       type="button" 
       class="btn btn-primary btn-lg px-4 gap-3" (click)="syncBlock()"
