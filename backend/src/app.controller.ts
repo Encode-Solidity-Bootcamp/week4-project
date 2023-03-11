@@ -30,14 +30,4 @@ export class AppController {
   ): Promise<string> {
     return await this.appService.getTransactionStatus(hash);
   }
-
-  @Get('payment-orders')
-  getPaymentOrders() {
-    return this.appService.getPaymentOrders();
-  }
-
-  @Post('payment-order')
-  createPaymentOrder(@Body() body: CreatepaymentOrderDTO) {
-    return this.appService.createPaymentOrder(body.value, body.secret);
-  }
 }
