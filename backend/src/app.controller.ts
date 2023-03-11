@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 import { RequestTokensDTO } from './dtos/createPaymentOrder.dto';
+import { getVotingDTO } from './dtos/getVotingResult.dto';
 
 @Controller()
 export class AppController {
@@ -33,5 +34,10 @@ export class AppController {
   @Post('request-tokens')
   requestTokens(@Body() body: RequestTokensDTO){
     return {result: this.appService.requestTokens(body.address, body.amount)};
+  }
+
+  @Get('vote-results')
+  winningVote(): Promise<string> {
+    return this.appService.winningVote();
   }
 }
