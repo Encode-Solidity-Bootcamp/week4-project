@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { AppService } from './app.service';
-import { CreatepaymentOrderDTO } from './dtos/createPaymentOrder.dto';
 
 @Controller()
 export class AppController {
