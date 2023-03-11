@@ -6,7 +6,6 @@ import {
 } from '@nestjs/common';
 import { ethers, providers } from 'ethers';
 import * as tokenJson from './assets/MyToken.json';
-import { PaymentOrder } from './models/paymentOrder.model';
 
 const CONTRACT_ADDRESS = '0xd3Cc4Bfffa1ED08ba512E6a0f534857e09529Fd9';
 
