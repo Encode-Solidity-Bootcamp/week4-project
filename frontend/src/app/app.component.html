@@ -1,52 +1,78 @@
 <div class="px-4 py-5 my-5 text-center">
-  <h1 class="display-5 fw-bold">Hello</h1>
-  <div class="col-lg-6 mx-auto">
-    <div class="mx-4" *ngIf="blockNumber && blockNumber > 0">
-      <p class="lead mb-4">
-        We are connected to the Goerli Blockchain at block 
-        <strong>{{ blockNumber }}</strong></p>
-      <button 
-        type="button" 
-        class="btn btn-success btn-lg px-4 gap-3 my-5" 
-        (click)="createWallet()"
-        >
-        {{userWallet ? "Create Another" : "Create"}} Wallet
-      </button>
-      <div class="card mt-4 mx-auto my-4" *ngIf="userWallet">
-        <div class="card-body">
-          <h5 class="card-title">User Wallet</h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{userWallet.address }}</h6>
-          <p class="card-text">Eth Balance: {{ userEthBalance }} Eth </p>
-          <p class="card-text">Eth Balance: {{ userTokenBalance }} MTK </p>
-          <button
-          *ngIf="mintAmount.value" 
-        type="button" 
-        class="btn btn-danger btn-lg px-4 gap-3 my-4" 
-        (click)="requestTokens(mintAmount.value)"
-        >
-        Request Tokens
-      </button>
-      <p>Amount: </p>
-          <input #mintAmount type="number" min="0" max="10" class="input">
-        </div>
-      </div>
-      <div class="card mt-4 mx-auto my-4" *ngIf="tokenContractAddress">
-        <div class="card-body">
-          <h5 class="card-title">Token Contract</h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{ tokenContractAddress }}</h6>
-          <p class="card-text">Total Supply : {{ tokenTotalSupply }} Mtk </p>
-        </div>
+  <div>
+    <h1 class="display-5 fw-bold">Team 11 (2023) Election</h1>
+    <div *ngIf="startLoading" class="text-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
       </div>
     </div>
-    
-    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-      
-      <button 
-      type="button" 
-      class="btn btn-primary btn-lg px-4 gap-3" (click)="syncBlock()"
-      >
-      Sync</button>
-      <button type="button" class="btn btn-outline-secondary btn-lg px-4" (click)="clearBlock()">Clear</button>
+    <button
+      *ngIf="!address"
+      type="button"
+      class="btn btn-success btn-lg px-4 gap-3"
+      (click)="connectWallet()"
+    >
+      Connect wallet
+    </button>
+  </div>
+
+  <div *ngIf="address">
+    <div class="card mt-4 mx-auto" style="width: 18rem">
+      <div class="card-body">
+        <h5 class="card-title">User Wallet</h5>
+        <h6 class="card-subtitle mb-2 text-muted">address: {{ address }}</h6>
+        <p class="card-text">Balanxe: {{ balance }} ETH</p>
+
+        <button
+          *ngIf="!delegated"
+          type="button"
+          class="btn btn-warning btn-sm px-4"
+          (click)="selfDelegate()"
+        >
+          Self Delagate
+        </button>
+
+        <p class="card-text py-2">Balanxe: {{ userTokenBalance }} MTK</p>
+
+        <p class="py-2">Request Vote Tokens (MTK)</p>
+        <label for="">Amount: </label>
+        <input #mintAmount type="number" min="0" max="10" class="input" />
+        <button
+          *ngIf="mintAmount.value"
+          type="button"
+          class="btn btn-primary btn-sm px-4 gap-3 my-5"
+          (click)="requestTokens(mintAmount.value)"
+        >
+          Request Tokens
+        </button>
+      </div>
+    </div>
+    <div class="card mt-4 mx-auto" style="width: 18rem">
+      <div class="card-body">
+        <h5 class="card-title">Vote for Team Captain</h5>
+        <mat-form-field appearance="fill">
+          <mat-label>Candidates</mat-label>
+          <mat-select>
+            <mat-option
+              (onSelectionChange)="getIndex(candidate.value)"
+              *ngFor="let candidate of candidates"
+              [value]="candidate.value"
+            >
+              {{ candidate.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button
+          type="button"
+          class="btn btn-primary btn-sm px-4 gap-3 my-5"
+          (click)="castVote(1)"
+        >
+          Vote
+        </button>
+      </div>
     </div>
   </div>
+
+  <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mt-4"></div>
 </div>
