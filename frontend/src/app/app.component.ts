@@ -1,7 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { ethers, utils, Wallet } from 'ethers';
+import { Contract, ethers, utils, Wallet } from 'ethers';
 
-const API_URL = "https:://localhost:3000/contract-address";
+const API_URL = "http://localhost:3000/contract-address";
 
 @Component({
   selector: 'app-root',
@@ -15,10 +16,15 @@ export class AppComponent {
   userEthBalance: number | undefined;
   userTokenBalance: number | undefined;
   tokenContractAddress: string | undefined;
+  tokenContract: Contract | undefined;
   
 
-  constructor(){
+  constructor(private http: HttpClient){
     this.provider = ethers.getDefaultProvider('goerli');
+  }
+
+  getTokenAddress() {
+    return this.http.get<{address: string}>(API_URL);
   }
 
   syncBlock(){
@@ -26,7 +32,14 @@ export class AppComponent {
     this.provider.getBlock('latest').then((block) => {
       this.blockNumber = block.number;
   });
+  this.getTokenAddress().subscribe((response) => {
+    this.tokenContractAddress = response.address;
+    this.updateTokenInfo();
+  })
   this.tokenContractAddress;
+}
+updateTokenInfo(){
+  this.tokenContract = new Contract(this.tokenContract, abi, this.userWallet ?? this.provider)
 }
 clearBlock(){
   this.blockNumber = 0;

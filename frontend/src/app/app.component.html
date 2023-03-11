@@ -19,6 +19,13 @@
           <p class="card-text">Eth Balance: {{ userEthBalance }} Eth </p>
         </div>
       </div>
+      <div class="card mt-4 mx-auto my-4" *ngIf="tokenContractAddress">
+        <div class="card-body">
+          <h5 class="card-title">Token Contract</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{ tokenContractAddress }}</h6>
+          <p class="card-text">Total Supply : {{ 0 }} Mtk </p>
+        </div>
+      </div>
     </div>
     
     <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
