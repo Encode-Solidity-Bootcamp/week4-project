@@ -32,8 +32,9 @@ export class AppController {
     return await this.appService.getTransactionStatus(hash);
   }
   @Post('request-tokens')
-  requestTokens(@Body() body: RequestTokensDTO){
-    return {result: this.appService.requestTokens(body.address, body.amount)};
+  async requestTokens(@Body() body: RequestTokensDTO): Promise<{txHash: string}>{
+    const txHash = await this.appService.requestTokens(body.address, body.amount);
+    return {txHash};
   }
 
   @Get('vote-results')
