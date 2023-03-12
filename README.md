@@ -8,7 +8,7 @@ then navigate your terminal into the frontend folder and input `npm install` to 
 
 after that input `npm run start` to serve the repo in your local machine
 
-Then also navigate also into the backend folder and input `yarn install`
+Then also navigate also into the backend folder with another Powershell terminal and input `yarn install`
 
 after that input `yarn start:dev` to serve the repo in your local machine
 
