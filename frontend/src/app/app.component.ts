@@ -104,15 +104,18 @@ export class AppComponent {
 
   requestTokens(amount: string) {
     const body = {
-      address: this.userWallet?.address,
+      address: '',
       amount: amount,
     };
-    this.http
-      .post<{ result: string }>(API_URL_MINT, body)
-      .subscribe((result) => {
-        console.log(`Requested: : ` + amount);
-        console.log(`Transaction Hash: ` + result.result);
-      });
+    ethereum.request({ method: 'eth_requestAccounts' }).then((accounts: string[]) => {
+      body.address = accounts[0];
+      this.http
+        .post<{ txHash: string }>(API_URL_MINT, body)
+        .subscribe((txHash) => {
+          console.log(`Requested: : ` + amount);
+          console.log({txHash: txHash.txHash });
+        });
+    })
   }
 
   async selfDelegate() {
