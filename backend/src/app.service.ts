@@ -61,14 +61,24 @@ export class AppService {
     return winner;
   }
 
-  requestTokens(address: string, amount: number){
-
+  async requestTokens(address: string, amount: number): Promise<string>{
     //load pkey from .env
+    console.log(address);
+    console.log(amount);
+    const provider = new ethers.providers.InfuraProvider('goerli', process.env.INFURA_API_KEY);
+    const wallet = new ethers.Wallet(process.env.PRIVATE_KEY);
+    console.log('wallet connected' );
     // create signer
-    // connect the signer
+    const signer = wallet.connect(provider)
+    this.contract = new ethers.Contract(CONTRACT_ADDRESS,tokenJson.abi,signer);
+    const amountToMint = ethers.utils.parseEther(amount.toString());
     // call the mint function
-    return "tx hash"
-    throw new Error('Method not implemented.');
+    console.log('minting .....' );
+    const tx = await this.contract.mint(address, amountToMint);
+    const txReceipt = await tx.wait();
+    console.log('Successful !!!' )
+    // return mintTxReceipt.hash;
+    return txReceipt.blockHash;
   }
 
   
